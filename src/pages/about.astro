@@ -1,14 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import CopyCodeLayout from '../layouts/CopyCodeLayout.astro';
 import Card from '../components/Card.astro';
-import Header from '../components/Header.astro'
-import PiHole from '../components/PiHole.astro';
-import Weather from '../components/Weather.astro';
+import Header from '../components/Header.astro';
 ---
 
-<Layout title="HOBweb">
-	<Header title='Dash'></Header>
+<Layout title="About">
+	<Header title='About'></Header>
 	<main>
 		<svg class="astro-a" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
 			<defs>
@@ -20,51 +17,12 @@ import Weather from '../components/Weather.astro';
 			<circle cx="200" cy="200" r="200" fill="url(#gradient)" />
 		</svg>
 		<h1>Welcome to <span class="text-gradient">HOB</span></h1>
-		<CopyCodeLayout>
-			<div class="instructions flex items-between">
-				<pre><code>ssh hob@192.168.1.78</code></pre>
-			</div>
-		</CopyCodeLayout>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="http://192.168.1.158:81"
-				title="NextCloud"
-				body="Local file transfer"
-				backgroundImage="/nextcloud.svg"
-			/>
-			<Card
-				href="http://192.168.1.78:32400"
-				title="Plex"
-				body="Media Server"
-				backgroundImage="/plex.svg"
-			/>
-			<Card
-				href="http://192.168.1.78:8112"
-				title="Deluge"
-				body="Torrents"
-				backgroundImage="/deluge.png"
-			/>
-			<Card
-				href="http://192.168.1.168"
-				title="PersonalCloud"
-				body="NAS Settings"
-				backgroundImage="/seagate.svg"
-			/>
-			<Card
-				href="http://192.168.1.1"
-				title="192.168.1.1"
-				body="Router Settings"
-				backgroundImage="/router.png"
-			/>
-			<Card
-				href="http://pi.box/admin"
-				title="PiHole"
-				body="DNS server"
-				backgroundImage="/pihole.png"
-			/>
-			<PiHole />
-			<Weather />
-		</ul>
+		<p class="instructions">
+			<strong>Message of the day:</strong> ...
+		</p>
+		<p>
+			A whole lot of text about this page here.
+		</p>
 	</main>
 </Layout>
 
@@ -72,7 +30,7 @@ import Weather from '../components/Weather.astro';
 	main {
 		margin: auto;
 		padding: 1rem;
-		width: 1000px;
+		width: 800px;
 		max-width: calc(100% - 2rem);
 		color: white;
 		font-size: 20px;
@@ -83,7 +41,7 @@ import Weather from '../components/Weather.astro';
 		top: -32px;
 		left: 50%;
 		transform: translatex(-50%);
-		width: 360px;
+		width: 220px;
 		height: auto;
 		z-index: -1;
 	}

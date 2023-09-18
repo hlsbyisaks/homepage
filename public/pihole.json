@@ -1,0 +1,38 @@
+{
+    "domains_being_blocked": 193528,
+    "dns_queries_today": 282,
+    "ads_blocked_today": 6,
+    "ads_percentage_today": 2.12766,
+    "unique_domains": 165,
+    "queries_forwarded": 235,
+    "queries_cached": 40,
+    "clients_ever_seen": 4,
+    "unique_clients": 4,
+    "dns_queries_all_types": 282,
+    "reply_UNKNOWN": 3,
+    "reply_NODATA": 63,
+    "reply_NXDOMAIN": 32,
+    "reply_CNAME": 87,
+    "reply_IP": 87,
+    "reply_DOMAIN": 6,
+    "reply_RRNAME": 0,
+    "reply_SERVFAIL": 0,
+    "reply_REFUSED": 0,
+    "reply_NOTIMP": 0,
+    "reply_OTHER": 0,
+    "reply_DNSSEC": 0,
+    "reply_NONE": 0,
+    "reply_BLOB": 4,
+    "dns_queries_all_replies": 282,
+    "privacy_level": 0,
+    "status": "enabled",
+    "gravity_last_updated": {
+        "file_exists": true,
+        "absolute": 1694967127,
+        "relative": {
+            "days": 0,
+            "hours": 0,
+            "minutes": 48
+        }
+    }
+}
