@@ -20,51 +20,62 @@ import Weather from '../components/Weather.astro';
 			<circle cx="200" cy="200" r="200" fill="url(#gradient)" />
 		</svg>
 		<h1>Welcome to <span class="text-gradient">HOB</span></h1>
-		<CopyCodeLayout>
-			<div class="instructions flex items-between">
-				<pre><code>ssh hob@192.168.1.78</code></pre>
-			</div>
-		</CopyCodeLayout>
-		<ul role="list" class="link-card-grid">
-			<Card
+		<section class="mb-8">
+			<h2>What is this?</h2>
+			<p class="mb-8">
+				This is a dashboard for my home network. It's a place to access all my local services and devices.
+			</p>
+			<CopyCodeLayout>
+				<div class="instructions items-between">
+					<c class="code-comment"># Server</p>
+					<pre><code>ssh hob@home.box</code></pre>
+					<p class="code-comment"># Raspberry Pi</p>
+					<pre><code>ssh pi@pi.box</code></pre>
+				</div>
+			</CopyCodeLayout>
+			<ul role="list" class="link-card-grid">
+				<Card
 				href="http://192.168.1.158:81"
 				title="NextCloud"
 				body="Local file transfer"
 				backgroundImage="/nextcloud.svg"
-			/>
-			<Card
+				/>
+				<Card
 				href="http://192.168.1.78:32400"
 				title="Plex"
 				body="Media Server"
 				backgroundImage="/plex.svg"
-			/>
-			<Card
+				/>
+				<Card
 				href="http://192.168.1.78:8112"
 				title="Deluge"
 				body="Torrents"
 				backgroundImage="/deluge.png"
-			/>
-			<Card
+				/>
+				<Card
 				href="http://192.168.1.168"
 				title="PersonalCloud"
 				body="NAS Settings"
 				backgroundImage="/seagate.svg"
-			/>
-			<Card
+				/>
+				<Card
 				href="http://192.168.1.1"
 				title="192.168.1.1"
 				body="Router Settings"
-				backgroundImage="/router.png"
-			/>
-			<Card
+				backgroundImage="/wifi.svg"
+				/>
+				<Card
 				href="http://pi.box/admin"
 				title="PiHole"
 				body="DNS server"
 				backgroundImage="/pihole.png"
-			/>
+				/>
+				<Weather />
+			</ul>
+		</section>
+		<section class="mb-8">
 			<PiHole />
-			<Weather />
-		</ul>
+		</section>
 	</main>
 </Layout>
 
@@ -124,5 +135,8 @@ import Weather from '../components/Weather.astro';
 		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
 		gap: 2rem;
 		padding: 0;
+	}
+	.code-comment {
+		color: rgba(var(--accent-light), 50%);
 	}
 </style>
