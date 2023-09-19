@@ -1,5 +1,9 @@
+![alt text](https://github.com/hlsbyisaks/homepage/blob/main/homepage_preview.png?raw=true)
 ## Intro
-Home page for local server
+Home page for local network devices
+
+## What is this?
+This is a dashboard for my home network. It's a place to access all my local services and devices.
 
 ## 🧞 Commands
 
@@ -13,5 +17,5 @@ All commands are run from the root of the project, from a terminal:
 | `npm run preview`         | Preview your build locally, before deploying     |
 | `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `npm run astro -- --help` | Get help using the Astro CLI                     |
-| `npm run docker_build`    | Get help using the Astro CLI                     |
-| `npm run docker_run`      | Get help using the Astro CLI                     |
+| `npm run docker_build`    | Build container                                  |
+| `npm run docker_run`      | Run Container                                    |
