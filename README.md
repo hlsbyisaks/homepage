@@ -1,4 +1,4 @@
-![alt text](https://github.com/hlsbyisaks/homepage/blob/main/homepage_preview.png?raw=true)
+![Preview of homepage](https://github.com/hlsbyisaks/homepage/blob/main/public/homepage_preview.png)
 ## Intro
 Home page for local network devices
 
