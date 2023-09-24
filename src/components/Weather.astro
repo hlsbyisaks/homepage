@@ -1,4 +1,90 @@
 ---
-const res = await fetch('https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/52350/period/latest-day/data.json');
-console.log(res);
+let data
+try {
+  const res = await fetch('https://opendata-download-metobs.smhi.se/api/version/1.0/parameter/1/station/52350/period/latest-day/data.json');
+  data = await res.json();
+} catch (error) {
+    // Handle network-related errors, including ENOTFOUND
+    console.error("Network error Weather:", error.message);
+}
+if (!data) return
+
+// Find the highest temerature in the array
+const highestTemp = data.value.reduce((acc, cur) => {
+  if (acc.value < cur.value) {
+    return cur;
+  }
+  return acc;
+});
+// Find the lowest temerature in the array
+const lowestTemp = data.value.reduce((acc, cur) => {
+  if (acc.value > cur.value) {
+    return cur;
+  }
+  return acc;
+});
+
+// Find the latest temperature in the array
+const latestTemp = data.value.reduce((acc, cur) => {
+  if (acc.date < cur.date) {
+    return cur;
+  }
+  return acc;
+});
+
+/* console.log(data.station.name, data.parameter.name, data.period.summary);
+console.log("High:", highestTemp.value)
+console.log("Low:", lowestTemp.value)
+console.log("Current:", latestTemp.value)
+
+console.log(new Date(data.value[0].date).toISOString() + " # " + data.value[0].value + "°C");
+console.log(new Date(data.value[1].date).toISOString() + " # " + data.value[1].value + "°C");
+console.log(new Date(data.value[2].date).toISOString() + " # " + data.value[2].value + "°C");
+console.log(new Date(data.value[3].date).toISOString() + " # " + data.value[3].value + "°C");
+console.log(new Date(data.value[4].date).toISOString() + " # " + data.value[4].value + "°C");
+console.log(new Date(data.value[5].date).toISOString() + " # " + data.value[5].value + "°C");
+console.log(new Date(data.value[6].date).toISOString() + " # " + data.value[6].value + "°C");
+console.log(new Date(data.value[7].date).toISOString() + " # " + data.value[7].value + "°C");
+console.log(new Date(data.value[8].date).toISOString() + " # " + data.value[8].value + "°C");
+console.log(new Date(data.value[9].date).toISOString() + " # " + data.value[9].value + "°C");
+console.log(new Date(data.value[10].date).toISOString() + " # " + data.value[10].value + "°C");
+console.log(new Date(data.value[11].date).toISOString() + " # " + data.value[11].value + "°C");
+console.log(new Date(data.value[12].date).toISOString() + " # " + data.value[12].value + "°C");
+console.log(new Date(data.value[13].date).toISOString() + " # " + data.value[13].value + "°C");
+console.log(new Date(data.value[14].date).toISOString() + " # " + data.value[14].value + "°C");
+console.log(new Date(data.value[15].date).toISOString() + " # " + data.value[15].value + "°C");
+console.log(new Date(data.value[16].date).toISOString() + " # " + data.value[16].value + "°C");
+console.log(new Date(data.value[17].date).toISOString() + " # " + data.value[17].value + "°C");
+console.log(new Date(data.value[18].date).toISOString() + " # " + data.value[18].value + "°C");
+console.log(new Date(data.value[19].date).toISOString() + " # " + data.value[19].value + "°C");
+console.log(new Date(data.value[20].date).toISOString() + " # " + data.value[20].value + "°C");
+console.log(new Date(data.value[21].date).toISOString() + " # " + data.value[21].value + "°C");
+console.log(new Date(data.value[22].date).toISOString() + " # " + data.value[22].value + "°C");
+console.log(new Date(data.value[23].date).toISOString() + " # " + data.value[23].value + "°C");
+console.log(new Date(data.value[24].date).toISOString() + " # " + data.value[24].value + "°C"); */
+
 ---
+
+
+<section class="absolute top-12 right-4">
+	<a href="/" class="flex items-center gap-x-4">
+		<h2 class="text-white text-3xl">
+			{ data.station.name }
+		</h2>
+	</a>
+
+	<ul class="flex flex-col sm:flex-col gap-x-8 text-white">
+		<li><a href="/">SMHI { data.parameter.name }</a></li>
+		<li><a href="/">{ data.period.summary }</a></li>
+		<li><a href="/">High: { highestTemp.value }°C</a></li>
+		<li><a href="/">Low: { lowestTemp.value }°C</a></li>
+		<li><a href="/">Current: { latestTemp.value }°C</a></li>
+	</ul>
+</section>
+
+<style>
+  li > a {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+  }
+</style>

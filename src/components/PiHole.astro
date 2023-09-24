@@ -1,105 +1,149 @@
 ---
-import Card from './Card.astro';
-const summary = await fetch(`${import.meta.env.PIHOLE_API_URL}admin/api.php?summaryRaw${import.meta.env.PIHOLE_API_KEY}`);
-const getQuerySources = await fetch(`${import.meta.env.PIHOLE_API_URL}admin/api.php?getQuerySources${import.meta.env.PIHOLE_API_KEY}`);
-const topItems = await fetch(`${import.meta.env.PIHOLE_API_URL}admin/api.php?topItems${import.meta.env.PIHOLE_API_KEY}`);
+import Card from "./Card.astro";
 
-// Parse the JSON responses
-const summaryData = await summary.json();
-const querySourcesData = await getQuerySources.json();
-const topItemsData = await topItems.json();
+let data;
+try {
+    const summary = await fetch(
+        `${import.meta.env.PIHOLE_API_URL}admin/api.php?summaryRaw${
+            import.meta.env.PIHOLE_API_KEY
+        }`,
+    );
+    const getQuerySources = await fetch(
+        `${import.meta.env.PIHOLE_API_URL}admin/api.php?getQuerySources${
+            import.meta.env.PIHOLE_API_KEY
+        }`,
+    );
+    const topItems = await fetch(
+        `${import.meta.env.PIHOLE_API_URL}admin/api.php?topItems${
+            import.meta.env.PIHOLE_API_KEY
+        }`,
+    );
 
-// Merge the data into a single object
-const data = {
-  summary: summaryData,
-  querySources: querySourcesData,
-  topItems: topItemsData,
-};
-
-const adPercentage = Math.round((data.summary.ads_percentage_today + Number.EPSILON) * 10) / 10;
-
-console.log(data)
+    // Parse the JSON responses
+    if (summary.status === 200) {
+        const summaryData = await summary.json();
+        const querySourcesData = await getQuerySources.json();
+        const topItemsData = await topItems.json();
+        data = {
+            summary: summaryData,
+            querySources: querySourcesData,
+            topItems: topItemsData,
+        };
+    } else {
+        // Handle non-200 status codes (e.g., show an error message)
+        console.error(`Request failed with status code ${summary.status}`);
+    }
+} catch (error) {
+    // Handle network-related errors, including ENOTFOUND
+    console.error("Network error PiHole:", error.message);
+}
+let adPercentage = 0;
+if (data) {
+    adPercentage =
+        Math.round((data.summary.ads_percentage_today + Number.EPSILON) * 10) /
+        10;
+}
 ---
+
 <h1 class="m-auto text-center text-5xl mb-2">DNS Analytics</h1>
+
+
+{!data ? 
+    <Card
+        href="https://pi.hole/admin"
+        title="PiHole Status"
+        body={"Offline"}
+        backgroundImage={"/offline.svg"}
+    /> 
+    : 
     <ul class="link-card-grid instructions">
-        <Card 
+        <Card
             href=""
-            title="Status"
-            body={data.summary.status = "enabled" ? "Online" : "Offline"}
-            backgroundImage={data.summary.status != "enabled" ? "/online.svg" : "/offline.svg"}
+            title="PiHole Status"
+            body={"Online"}
+            backgroundImage={"/online.svg"}
         />
-        <Card 
+        <Card
             href=""
             title="Total Queries"
             body={data.summary.dns_queries_all_types}
             backgroundImage="/globe.svg"
         />
-        <Card 
+        <Card
             href=""
             title="Ads Blocked Today"
             body={data.summary.ads_blocked_today}
             backgroundImage="/globe.svg"
         />
-        <Card 
+        <Card
             href=""
             title="Ads Percentage Today"
-            body={adPercentage.toString() + "%"}
+            body={!data ? "" : adPercentage.toString() + "%"}
             backgroundImage="/globe.svg"
         />
-        <Card 
+        <Card
             href=""
             title="Clients Ever Seen"
             body={data.summary.unique_clients}
             backgroundImage="/globe.svg"
         />
-        <Card 
+        <Card
             href=""
             title="Domains Being Blocked"
             body={data.summary.domains_being_blocked}
             backgroundImage="/globe.svg"
         />
-        <Card 
+        <Card
             href=""
             title="Queries Cached"
             body={data.summary.queries_cached}
             backgroundImage="/globe.svg"
         />
-        <Card 
+        <Card
             href=""
             title="Unique Domains"
             body={data.summary.unique_domains}
             backgroundImage="/globe.svg"
         />
-        <Card 
+        <Card
             href=""
             title="Last Gravity Update"
-            body={data.summary.gravity_last_updated.relative.days + "d" + data.summary.gravity_last_updated.relative.hours + "h" + data.summary.gravity_last_updated.relative.minutes + "m"}
+            body={
+                data.summary.gravity_last_updated.relative.days +
+                "d" +
+                data.summary.gravity_last_updated.relative.hours +
+                "h" +
+                data.summary.gravity_last_updated.relative.minutes +
+                "m"
+            }
             backgroundImage="/globe.svg"
         />
     </ul>
-        
+}
 
-        
 <style>
     h1 {
-		font-size: 3rem;
-		font-weight: 700;
-		line-height: 1;
-		text-align: center;
-		margin-bottom: .5em;
-	}
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        margin-bottom: 0.5em;
+    }
     .link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
-		gap: 2rem;
-		padding: 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
+        gap: 2rem;
+        padding: 0;
         width: 100%;
-	}
+    }
     .instructions {
-		margin-bottom: 2rem;
-		border: 1px solid rgba(var(--accent-light), 25%);
-		background: linear-gradient(rgba(var(--accent-dark), 66%), rgba(var(--accent-dark), 33%));
-		padding: 1.5rem;
-		border-radius: 8px;
-	}
+        margin-bottom: 2rem;
+        border: 1px solid rgba(var(--accent-light), 25%);
+        background: linear-gradient(
+            rgba(var(--accent-dark), 66%),
+            rgba(var(--accent-dark), 33%)
+        );
+        padding: 1.5rem;
+        border-radius: 8px;
+    }
 </style>
